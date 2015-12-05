@@ -29,5 +29,6 @@ proguard/
 # Android Studio Navigation editor temp files
 .navigation/
 
+/app/src/androidTest/java/com/android/ifmo_android_2015/loafer
 # Android Studio captures folder
 captures/
