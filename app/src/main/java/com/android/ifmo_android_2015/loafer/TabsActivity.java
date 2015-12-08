@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TabHost;
 
+import java.net.MalformedURLException;
+
+import timepad.Timepad;
+
 public class TabsActivity extends TabActivity {
 
     @Override
@@ -25,5 +29,12 @@ public class TabsActivity extends TabActivity {
         tabHost.addTab(tabMap);
         tabHost.addTab(tabList);
         tabHost.addTab(tabSettings);
+        try {
+            Intent db = new Intent(this, DataBaseInitService.class);
+            db.putExtra("URL", Timepad.createCityUrl("Москва", 10, 0).toString());
+            startService(db);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 }

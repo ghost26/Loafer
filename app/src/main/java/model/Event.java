@@ -16,6 +16,8 @@ public class Event {
     private URI defaultImageUrl;
     private URI eventUrl;
 
+    public Event() {}
+
     public Event(int id, String createdAt, String startAt, String endsAt, String name,
                  String descriptionShort, URI default_url, URI eventUrl,
                  Location location) {
@@ -93,5 +95,9 @@ public class Event {
     public void setEventUrl(URI eventUrl) {
         this.eventUrl = eventUrl;
     }
+
+    public void setId(int id) {this.id = id;}
+
+    public int getId() {return id;}
 
 }
