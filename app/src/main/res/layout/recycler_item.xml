@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_recycler_item"
-        android:text="@string/app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="7dp"
-        android:textSize="18sp" />
+        android:layout_marginBottom="10dp"
+        android:id="@+id/recycler_item_image"
+        android:src="@color/wallet_holo_blue_light"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:textSize="23dp"
+        android:text="Name"
+        android:gravity="top"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@id/recycler_item_image"
+        android:layout_toRightOf="@id/recycler_item_image"
+        android:id="@+id/recycler_item_name"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:textSize="15dp"
+        android:text="Address"
+        android:gravity="bottom"
+        android:layout_marginLeft="10dp"
+        android:layout_alignBottom="@id/recycler_item_image"
+        android:layout_toRightOf="@id/recycler_item_image"
+        android:id="@+id/recycler_item_address"/>
 
-</LinearLayout>
+</RelativeLayout>
