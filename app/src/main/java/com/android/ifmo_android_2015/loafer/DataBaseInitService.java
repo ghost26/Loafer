@@ -9,14 +9,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import model.Event;
 import model.Location;
@@ -27,13 +24,9 @@ import timepad.Timepad;
  */
 public class DataBaseInitService extends IntentService {
 
-    private enum Status {CREATED, IN_PROGRESS, DONE, ERROR}
     private Status status = Status.CREATED;
-
     private int countOfEvents = 1;
-
     private String debug = "DBServise";
-
     private boolean skipEvent;
 
     public DataBaseInitService() {
@@ -99,7 +92,6 @@ public class DataBaseInitService extends IntentService {
         }
         reader.endObject();
     }
-
 
     private List<Event> getAllEvents(JsonReader reader, int count) throws IOException, URISyntaxException {
         List<Event> list = new ArrayList<>();
@@ -180,6 +172,8 @@ public class DataBaseInitService extends IntentService {
                     } catch (Exception e) {
                         skipEvent = true;
                     }
+                } else {
+                    skipEvent = true;
                 }
                 reader.endArray();
             } else {
@@ -190,4 +184,6 @@ public class DataBaseInitService extends IntentService {
 
         return location;
     }
+
+    private enum Status {CREATED, IN_PROGRESS, DONE, ERROR}
 }
