@@ -17,6 +17,7 @@ public class TabsActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs);
 
+
         TabHost tabHost = getTabHost();
         Intent mapIntent = new Intent(this, EventsMapActivity.class);
         Intent listIntent = new Intent(this, EventsListActivity.class);
@@ -29,12 +30,10 @@ public class TabsActivity extends TabActivity {
         tabHost.addTab(tabMap);
         tabHost.addTab(tabList);
         tabHost.addTab(tabSettings);
-        try {
-            Intent db = new Intent(this, DataBaseInitService.class);
-            db.putExtra("URL", Timepad.createCityUrl("Москва", 10, 0).toString());
-            startService(db);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        Log.d("TabsActivity", getIntent().getStringExtra("CITY"));
+
+        Intent db = new Intent(this, DataBaseInitService.class);
+        db.putExtra("CITY", getIntent().getStringExtra("CITY"));
+        startService(db);
     }
 }

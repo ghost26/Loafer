@@ -1,5 +1,6 @@
 package com.android.ifmo_android_2015.loafer;
 
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 
 public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCallback{
@@ -22,9 +24,9 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
 
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
-
+        mapView.getMap().getUiSettings().setZoomControlsEnabled(true);
+        mapView.getMap().setMyLocationEnabled(true);
         mapView.getMapAsync(this);
-
     }
 
 

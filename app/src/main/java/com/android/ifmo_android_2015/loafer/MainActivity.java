@@ -15,7 +15,28 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void onClick(View v) {
-        Intent mapView = new Intent(this, TabsActivity.class);
-        startActivity(mapView);
+        Intent tabsView = new Intent(this, TabsActivity.class);
+        switch (v.getId()) {
+            case R.id.stavropol :
+                tabsView.putExtra("CITY", "Ставрополь");
+                break;
+            case R.id.moscow :
+                tabsView.putExtra("CITY", "Москва");
+                break;
+            case R.id.stPetersburg :
+                tabsView.putExtra("CITY", "Санкт-Петербург");
+                break;
+            case R.id.rostov:
+                tabsView.putExtra("CITY", "Ростов");
+                break;
+            case R.id.rostovNaDony:
+                tabsView.putExtra("CITY", "Ростов-на-Дону");
+                break;
+            case R.id.krasnodar:
+                tabsView.putExtra("CITY", "Краснодар");
+                break;
+        }
+
+        startActivity(tabsView);
     }
 }
