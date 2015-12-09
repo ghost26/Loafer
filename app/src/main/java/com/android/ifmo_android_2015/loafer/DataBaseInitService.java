@@ -30,9 +30,11 @@ public class DataBaseInitService extends IntentService {
     private enum Status {CREATED, IN_PROGRESS, DONE, ERROR}
     private Status status = Status.CREATED;
 
-    private int countOfEvents;
+    private int countOfEvents = 1;
 
     private String debug = "DBServise";
+
+    private boolean skipEvent;
 
     public DataBaseInitService() {
         super("DataBaseInitService");
@@ -46,22 +48,34 @@ public class DataBaseInitService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         status = Status.IN_PROGRESS;
-        try {
-            URL url = new URL(intent.getStringExtra("URL"));
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = connection.getInputStream();
+        String city = intent.getStringExtra("CITY");
+        List<Event> list = new ArrayList<>();
 
-            JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
-            getCountOfEvents(reader);
-            List<Event> list = getAllEvents(reader);
-            for (int i = 0; i < list.size(); i++) {
-                Log.i(debug, list.get(i).getName());
+        int countedEvents = 0, add = 0;
+        try {
+            while (countedEvents != countOfEvents) {
+                URL url = Timepad.createCityUrl(city, 100, countedEvents);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = connection.getInputStream();
+
+                JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
+                getCountOfEvents(reader);
+                add = Math.min(100, countOfEvents - countedEvents);
+                list.addAll(getAllEvents(reader, add));
+                countedEvents += add;
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                if (reader != null) {
+                    reader.close();
+                }
             }
         } catch (Exception e) {
             status = Status.ERROR;
             e.printStackTrace();
             stopSelf();
         }
+        Log.d(debug, "Count of events: " + String.valueOf(list.size()));
         status = Status.DONE;
         stopSelf();
     }
@@ -77,7 +91,6 @@ public class DataBaseInitService extends IntentService {
             String term = reader.nextName();
             if (term.equals("total")) {
                 countOfEvents = reader.nextInt();
-                countOfEvents = 10;
             }
             if (term.equals("values")) {
                 reader.beginArray();
@@ -88,11 +101,16 @@ public class DataBaseInitService extends IntentService {
     }
 
 
-    private List<Event> getAllEvents(JsonReader reader) throws IOException, URISyntaxException {
+    private List<Event> getAllEvents(JsonReader reader, int count) throws IOException, URISyntaxException {
         List<Event> list = new ArrayList<>();
-        while (countOfEvents != 0) {
-            list.add(getNextEvent(reader));
-            countOfEvents--;
+        Event event;
+        while (count != 0) {
+            skipEvent = false;
+            event = getNextEvent(reader);
+            if (!skipEvent) {
+                list.add(event);
+            }
+            count--;
         }
         reader.endArray();
         return list;
@@ -152,7 +170,17 @@ public class DataBaseInitService extends IntentService {
                 location.setAddress(reader.nextString());
             } else if (term.equals("coordinates")) {
                 reader.beginArray();
-                location.setCoordinates(Double.parseDouble(reader.nextString()), Double.parseDouble(reader.nextString()));
+                ArrayList<String> cor = new ArrayList<>();
+                while (reader.hasNext()) {
+                    cor.add(reader.nextString());
+                }
+                if (cor.size() == 2) {
+                    try {
+                        location.setCoordinates(Double.parseDouble(cor.get(0)), Double.parseDouble(cor.get(1)));
+                    } catch (Exception e) {
+                        skipEvent = true;
+                    }
+                }
                 reader.endArray();
             } else {
                 reader.skipValue();
