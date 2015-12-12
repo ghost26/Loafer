@@ -60,9 +60,9 @@ public final class EventContract {
                 + COUNTRY + " TEXT, "
                 + LATITUDE + " REAL, "
                 + LONGITUDE + " REAL, "
+                + CITY_ID + " INTEGER, "
                 + "FOREIGN KEY(" + CITY_ID + ") REFERENCES " +
-                "cities" + "(" + CITY_ID + ") ON DELETE CASCADE);"
-                        + " )";
+                "cities" + "(" + CityColumns.CITY_ID  + ") ON DELETE CASCADE);";
 
     }
 
@@ -73,8 +73,8 @@ public final class EventContract {
         static final String CREATE_TABLE = "CREATE TABLE " + TABLE
                 + " ("
                 + CITY_ID + " INTEGER PRIMARY KEY, "
-                + NAME + " TEXT, "
-                + " )";
+                + NAME + " TEXT"
+                + ");";
 
     }
 

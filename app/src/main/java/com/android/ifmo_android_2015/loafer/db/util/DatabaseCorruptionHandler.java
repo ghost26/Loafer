@@ -31,6 +31,7 @@ public class DatabaseCorruptionHandler implements DatabaseErrorHandler {
             /* ignore */
         }
         final File dbFile = context.getDatabasePath(dbName);
+
         if (databaseOk) {
             // database is just fine. no need to delete the database file
             Log.e(LOG_TAG, "no corruption in the database: " + dbFile.getPath());

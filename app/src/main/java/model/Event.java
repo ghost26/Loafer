@@ -7,19 +7,19 @@ import java.net.URI;
  */
 public class Event {
     Location location;
-    private int id;
-    private String createdAt;
-    private String startAt;
-    private String endsAt;
-    private String name;
-    private String descriptionShort;
-    private URI defaultImageUrl;
-    private URI eventUrl;
+    private long id ;
+    private String createdAt = "";
+    private String startAt = "";
+    private String endsAt = "";
+    private String name = "";
+    private String descriptionShort = "";
+    private String defaultImageUrl = "";
+    private String eventUrl = "";
 
     public Event() {}
 
     public Event(int id, String createdAt, String startAt, String endsAt, String name,
-                 String descriptionShort, URI default_url, URI eventUrl,
+                 String descriptionShort, String default_url, String eventUrl,
                  Location location) {
         this.id = id;
         this.createdAt = createdAt;
@@ -80,24 +80,24 @@ public class Event {
         this.descriptionShort = descriptionShort;
     }
 
-    public URI getDefaultImageUrl() {
+    public String getDefaultImageUrl() {
         return defaultImageUrl;
     }
 
-    public void setDefaultImageUrl(URI defaultImageUrl) {
+    public void setDefaultImageUrl(String defaultImageUrl) {
         this.defaultImageUrl = defaultImageUrl;
     }
 
-    public URI getEventUrl() {
+    public String getEventUrl() {
         return eventUrl;
     }
 
-    public void setEventUrl(URI eventUrl) {
+    public void setEventUrl(String eventUrl) {
         this.eventUrl = eventUrl;
     }
 
-    public void setId(int id) {this.id = id;}
+    public void setId(long id) {this.id = id;}
 
-    public int getId() {return id;}
+    public long getId() {return id;}
 
 }
