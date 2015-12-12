@@ -18,7 +18,7 @@ public class EventDBHelper extends SQLiteOpenHelper {
 
     private static final int DB_VERSION_1 = 1;
 
-    private final Context context;
+
 
     private static volatile EventDBHelper instance;
 
@@ -33,6 +33,8 @@ public class EventDBHelper extends SQLiteOpenHelper {
         return instance;
     }
 
+    private final Context context;
+
     public EventDBHelper(Context context) {
         super(context, DB_FILE_NAME, null, DB_VERSION_1,
                 new DatabaseCorruptionHandler(context, DB_FILE_NAME));
@@ -41,8 +43,8 @@ public class EventDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(EventContract.Events.CREATE_TABLE);
         db.execSQL(EventContract.Cities.CREATE_TABLE);
+        db.execSQL(EventContract.Events.CREATE_TABLE);
     }
 
     @Override

@@ -4,10 +4,10 @@ package model;
  * Created by ruslanabdulhalikov on 06.12.15.
  */
 public class Location {
-    private String country;
-    private String city;
-    private String address;
-    private double latitude;
+    private String country = "";
+    private String city = "";
+    private String address = "";
+    private double latitude ;
     private double longitude;
 
     public void setCoordinates(double latitude, double longitude) {

@@ -2,8 +2,12 @@ package com.android.ifmo_android_2015.loafer;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.JsonReader;
 import android.util.Log;
+
+import com.android.ifmo_android_2015.loafer.db.DataBaseAdapter;
+import com.android.ifmo_android_2015.loafer.db.EventDBHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,13 +48,14 @@ public class DataBaseInitService extends IntentService {
         String city = intent.getStringExtra("CITY");
         List<Event> list = new ArrayList<>();
 
+
         int countedEvents = 0, add = 0;
         try {
             while (countedEvents != countOfEvents) {
                 URL url = Timepad.createCityUrl(city, 100, countedEvents);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = connection.getInputStream();
-
+                Log.wtf("HITMAN", url.toString());
                 JsonReader reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
                 getCountOfEvents(reader);
                 add = Math.min(100, countOfEvents - countedEvents);
@@ -67,6 +72,21 @@ public class DataBaseInitService extends IntentService {
             status = Status.ERROR;
             e.printStackTrace();
             stopSelf();
+        }
+
+        EventDBHelper hp = EventDBHelper.getInstance(getApplicationContext());
+        try {
+//            hp.dropDb();
+            SQLiteDatabase db = hp.getWritableDatabase();
+            DataBaseAdapter wdb = new DataBaseAdapter(db);
+            wdb.insertCity(1, "Ставрополь");
+
+            wdb.insertEventList(list);
+            wdb.getAllEventsByCity("1");
+            wdb.deleteEventsByCity("1");
+        } catch (Exception e) {
+            Log.d("DataBaseInitService", "TOTAL FAIL! ((((");
+
         }
         Log.d(debug, "Count of events: " + String.valueOf(list.size()));
         status = Status.DONE;
@@ -114,7 +134,7 @@ public class DataBaseInitService extends IntentService {
         while (reader.hasNext()) {
             String term = reader.nextName();
             if (term.equals("id")) {
-                event.setId(reader.nextInt());
+                event.setId(reader.nextLong());
             } else if (term.equals("created_at")) {
                 event.setCreatedAt(reader.nextString());
             } else if (term.equals("starts_at")) {
@@ -124,12 +144,12 @@ public class DataBaseInitService extends IntentService {
             } else if (term.equals("name")) {
                 event.setName(reader.nextString());
             } else if (term.equals("url")) {
-                event.setEventUrl(new URI(reader.nextString()));
+                event.setEventUrl(reader.nextString());
             }else if (term.equals("poster_image")) {
                 reader.beginObject();
                 while (reader.hasNext()) {
                     if (reader.nextName().equals("default_url")) {
-                        event.setDefaultImageUrl(new URI(reader.nextString()));
+                        event.setDefaultImageUrl(reader.nextString());
                     } else {
                         reader.skipValue();
                     }

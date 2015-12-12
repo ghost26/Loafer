@@ -17,6 +17,15 @@ public class Timepad {
     private static final String FIELDS = "fields";
     private static final String LOCATION = "location";
     private static final String CREATED_AT = "created_at";
+    private static final String DESCRIPTION_SHORT = "description_short";
+    private static final String EVENT_URL = "url";
+    private static final String POSTER_IMAGE = "poster_image";
+    private static final String STARTS_AT = "starts_at";
+    private static final String NAME = "name";
+
+
+
+
     private static final String ENDS_AT = "ends_at";
     private static final String ACCESS_SATUSES = "access_statuses";
     private static final String PUBLIC = "public";
@@ -32,7 +41,9 @@ public class Timepad {
                 .appendQueryParameter(LIMIT, Integer.toString(limit))
                 .appendQueryParameter(SKIP, Integer.toString(skip))
                 .appendQueryParameter(CITIES, city)
-                .appendQueryParameter(FIELDS, CREATED_AT + "," + ENDS_AT + "," + LOCATION)
+                .appendQueryParameter(FIELDS, CREATED_AT + "," + ENDS_AT + "," + LOCATION + ","
+                        + STARTS_AT + "," + DESCRIPTION_SHORT + "," + EVENT_URL + ","
+                        + POSTER_IMAGE + "," + NAME)
                 .appendQueryParameter(ACCESS_SATUSES, PUBLIC)
                 .build();
         return new URL(uri.toString());
