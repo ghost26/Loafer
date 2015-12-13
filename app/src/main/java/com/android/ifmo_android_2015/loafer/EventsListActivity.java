@@ -9,10 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.EasyEvent;
+import model.EventKeeper;
 
 public class EventsListActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
@@ -24,10 +24,8 @@ public class EventsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_list);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        //events = (List<EasyEvent>) bundle.getSerializable("List_of_events");
-        events = new ArrayList<EasyEvent>();
+        EventKeeper a = EventKeeper.getInstance(getApplicationContext());
+        events = a.getEasyEvents();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 

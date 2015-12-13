@@ -13,6 +13,8 @@ public class TabsActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs);
 
+        Log.d("LOL", "CATCH IN TABS");
+        Log.d("LOL", "PUT TO BUNDLES");
 
         TabHost tabHost = getTabHost();
         Intent mapIntent = new Intent(this, EventsMapActivity.class);
@@ -26,11 +28,5 @@ public class TabsActivity extends TabActivity {
         tabHost.addTab(tabMap);
         tabHost.addTab(tabList);
         tabHost.addTab(tabSettings);
-        Log.d("TabsActivity", getIntent().getStringExtra("CITY"));
-
-        Intent db = new Intent(this, DataBaseInitService.class);
-        db.putExtra("CITY", getIntent().getStringExtra("CITY"));
-        db.putExtra("CITY_ID", getIntent().getStringExtra("CITY_ID"));
-        startService(db);
     }
 }

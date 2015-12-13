@@ -8,10 +8,10 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import model.EasyEvent;
 import model.Event;
+import model.MapEvent;
 
 /**
  * Created by ruslanabdulhalikov on 12.12.15.
@@ -30,7 +30,7 @@ public class DataBaseAdapter {
 
     }
 
-    public boolean insertEventList(List<Event> eventList, long cityId) {
+    public boolean insertEventList(ArrayList<Event> eventList, long cityId) {
         this.cityId = cityId;
         statement = db.compileStatement(String.format(
                 "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -118,13 +118,13 @@ public class DataBaseAdapter {
         return cursor != null && cursor.moveToFirst();
     }
 
-    public List<EasyEvent> getAllEventsByCity(String cityId) {
+    public ArrayList<EasyEvent> getAllEventsByCity(String cityId) {
 
         Cursor cursor = db.query(EventContract.Events.TABLE,
                 new String[] { "_id", "name", "default_image_url", "address"},
                 "city_id=?",
                 new String[] {cityId}, null, null, null);
-        List<EasyEvent> list = new ArrayList<>();
+        ArrayList<EasyEvent> list = new ArrayList<>();
 
         if (cursor != null && cursor.moveToFirst()) {
             for(; !cursor.isAfterLast(); cursor.moveToNext()) {
@@ -133,8 +133,32 @@ public class DataBaseAdapter {
                 easyEvent.setName(cursor.getString(1));
                 easyEvent.setDefaultImageUrl(cursor.getString(2));
                 easyEvent.setAddress(cursor.getString(3));
-                Log.d(LOG_TAG, "" + easyEvent.getName());
+                //Log.d(LOG_TAG, "" + easyEvent.getName());
                 list.add(easyEvent);
+            }
+
+        }
+
+        return list;
+    }
+
+    public ArrayList<MapEvent> getAllMapEventsByCity(String cityId) {
+
+        Cursor cursor = db.query(EventContract.Events.TABLE,
+                new String[] { "_id", "name", "latitude", "longitude"},
+                "city_id=?",
+                new String[] {cityId}, null, null, null);
+        ArrayList<MapEvent> list = new ArrayList<>();
+
+        if (cursor != null && cursor.moveToFirst()) {
+            for(; !cursor.isAfterLast(); cursor.moveToNext()) {
+                MapEvent mapEvent = new MapEvent();
+                mapEvent.setId(cursor.getLong(0));
+                mapEvent.setName(cursor.getString(1));
+                mapEvent.setLatitude(cursor.getDouble(2));
+                mapEvent.setLongitude(cursor.getDouble(3));
+                //Log.d(LOG_TAG, "" + mapEvent.getName());
+                list.add(mapEvent);
             }
 
         }
@@ -164,13 +188,13 @@ public class DataBaseAdapter {
             event.setDefaultImageUrl(cursor.getString(9));
             event.setEventUrl(cursor.getString(10));
             event.getLocation().setAddress(cursor.getString(11));
-            Log.d(LOG_TAG, "" + event.getName());
+            //Log.d(LOG_TAG, "" + event.getName());
         }
 
         return event;
     }
 
-    public boolean updateCityEvents(String cityId, String cityName, List<Event> eventList) {
+    public boolean updateCityEvents(String cityId, String cityName, ArrayList<Event> eventList) {
         deleteEventsByCity(cityId);
         return insertCity(Long.parseLong(cityId), cityName) &&
                 insertEventList(eventList, Long.parseLong(cityId));

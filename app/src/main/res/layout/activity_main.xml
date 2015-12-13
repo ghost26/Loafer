@@ -28,8 +28,8 @@
 
     <Button
         style="@style/City"
-        android:id="@+id/rostov"
-        android:text="Ростов"
+        android:id="@+id/saratov"
+        android:text="Саратов"
         android:onClick="onClick"/>
 
     <Button
