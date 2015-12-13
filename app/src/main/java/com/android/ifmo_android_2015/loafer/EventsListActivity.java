@@ -1,10 +1,14 @@
 package com.android.ifmo_android_2015.loafer;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,13 +23,30 @@ public class EventsListActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<EasyEvent> events;
+    BroadcastReceiver receiver;
+    EventKeeper eventKeeper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_list);
 
-        EventKeeper a = EventKeeper.getInstance(getApplicationContext());
-        events = a.getEasyEvents();
+        receiver = new BroadcastReceiver()
+        {
+            @Override
+            public void onReceive(Context context, Intent intent)
+            {
+                if(intent.getAction().equals("UPDATEISREADY"))
+                {
+                    changeList();
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter("UPDATEISREADY");
+        registerReceiver(receiver, filter);
+
+        eventKeeper = EventKeeper.getInstance(getApplicationContext());
+        events = eventKeeper.getEasyEvents();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -46,8 +67,20 @@ public class EventsListActivity extends AppCompatActivity {
         detailedInfo.putExtra("NAME", name.getText().toString());
         detailedInfo.putExtra("ADDRESS", address.getText().toString());
 
-        //mAdapter = new RecyclerViewAdapter(events);
-        //mRecyclerView.swapAdapter(mAdapter, false);
+
         startActivity(detailedInfo);
+    }
+
+    private void changeList() {
+        Log.d("LIST", "UPDATE");
+        events = eventKeeper.getEasyEvents();
+        mAdapter = new RecyclerViewAdapter(events);
+        mRecyclerView.swapAdapter(mAdapter, false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(receiver!= null){unregisterReceiver(receiver);}
     }
 }

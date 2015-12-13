@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity{
+    public String currentCity;
+    public String currentCityId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,31 +21,33 @@ public class MainActivity extends AppCompatActivity{
         Intent intent = new Intent(this, DataBaseInitService.class);
         switch (v.getId()) {
             case R.id.stavropol :
-                intent.putExtra("CITY", "Ставрополь");
-                intent.putExtra("CITY_ID", "0");
+                currentCity = "Ставрополь";
+                currentCityId = "0";
                 break;
             case R.id.moscow :
-                intent.putExtra("CITY", "Москва");
-                intent.putExtra("CITY_ID", "1");
+                currentCity = "Москва";
+                currentCityId = "1";
                 break;
             case R.id.stPetersburg :
-                intent.putExtra("CITY", "Санкт-Петербург");
-                intent.putExtra("CITY_ID", "2");
+                currentCity = "Санкт-Петербург";
+                currentCityId = "2";
                 break;
             case R.id.saratov:
-                intent.putExtra("CITY", "Саратов");
-                intent.putExtra("CITY_ID", "3");
+                currentCity = "Саратов";
+                currentCityId = "3";
                 break;
             case R.id.rostovNaDony:
-                intent.putExtra("CITY", "Ростов-на-Дону");
-                intent.putExtra("CITY_ID", "4");
+                currentCity = "Ростов-на-Дону";
+                currentCityId = "4";
                 break;
             case R.id.krasnodar:
-                intent.putExtra("CITY", "Краснодар");
-                intent.putExtra("CITY_ID", "5");
+                currentCity = "Краснодар";
+                currentCityId = "5";
                 break;
         }
         intent.putExtra("FROM", "MAIN");
+        intent.putExtra("CITY", currentCity);
+        intent.putExtra("CITY_ID", currentCityId);
         PendingIntent pi = createPendingResult(0, new Intent(), 0);
         intent.putExtra("PINTENT", pi);
         startService(intent);
@@ -56,6 +60,8 @@ public class MainActivity extends AppCompatActivity{
             if (resultCode == 0) {
                 Log.d("LOL", "CATCH");
                 Intent intent = new Intent(this, TabsActivity.class);
+                intent.putExtra("CITY", currentCity);
+                intent.putExtra("CITY_ID", currentCityId);
                 Log.d("LOL", "SEND TO TABS");
                 startActivity(intent);
             }
