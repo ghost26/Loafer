@@ -17,10 +17,15 @@ public class EventDBHelper extends SQLiteOpenHelper {
     private static final String DB_FILE_NAME = "events.db";
 
     private static final int DB_VERSION_1 = 1;
-
-
-
+    private static final String LOG_TAG = "EvnetsDB";
     private static volatile EventDBHelper instance;
+    private final Context context;
+
+    public EventDBHelper(Context context) {
+        super(context, DB_FILE_NAME, null, DB_VERSION_1,
+                new DatabaseCorruptionHandler(context, DB_FILE_NAME));
+        this.context = context.getApplicationContext();
+    }
 
     public static EventDBHelper getInstance(Context context) {
         if (instance == null) {
@@ -31,14 +36,6 @@ public class EventDBHelper extends SQLiteOpenHelper {
             }
         }
         return instance;
-    }
-
-    private final Context context;
-
-    public EventDBHelper(Context context) {
-        super(context, DB_FILE_NAME, null, DB_VERSION_1,
-                new DatabaseCorruptionHandler(context, DB_FILE_NAME));
-        this.context = context.getApplicationContext();
     }
 
     @Override
@@ -78,6 +75,4 @@ public class EventDBHelper extends SQLiteOpenHelper {
             Log.w(LOG_TAG, "Failed to delete database file: " + dbFile, e);
         }
     }
-
-    private static final String LOG_TAG = "EvnetsDB";
 }

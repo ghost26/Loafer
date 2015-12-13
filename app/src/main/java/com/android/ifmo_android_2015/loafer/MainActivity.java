@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity{
                 tabsView.putExtra("CITY_ID", "2");
                 break;
             case R.id.rostov:
-                tabsView.putExtra("CITY", "Ростов");
+                tabsView.putExtra("CITY", "Саратов");
                 tabsView.putExtra("CITY_ID", "3");
                 break;
             case R.id.rostovNaDony:
