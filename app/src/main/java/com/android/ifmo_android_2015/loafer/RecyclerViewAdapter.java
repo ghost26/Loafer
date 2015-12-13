@@ -7,12 +7,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
+import model.EasyEvent;
+
 /**
  * Created by daniil on 05.12.15.
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-private String[] mDataset;
+private List<EasyEvent> mDataset;
 
 public static class ViewHolder extends RecyclerView.ViewHolder {
     public TextView name;
@@ -27,7 +31,7 @@ public static class ViewHolder extends RecyclerView.ViewHolder {
     }
 }
 
-    public RecyclerViewAdapter(String[] dataset) {
+    public RecyclerViewAdapter(List<EasyEvent> dataset) {
         mDataset = dataset;
     }
 
@@ -45,12 +49,12 @@ public static class ViewHolder extends RecyclerView.ViewHolder {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.name.setText(mDataset[position]);
-
+        holder.name.setText(mDataset.get(position).getName());
+        holder.address.setText(mDataset.get(position).getAddress());
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 }

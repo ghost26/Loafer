@@ -9,17 +9,25 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import model.EasyEvent;
+
 public class EventsListActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
+    private List<EasyEvent> events;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_list);
 
-        String[] myDataset = getDataSet();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        //events = (List<EasyEvent>) bundle.getSerializable("List_of_events");
+        events = new ArrayList<EasyEvent>();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -27,18 +35,8 @@ public class EventsListActivity extends AppCompatActivity {
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new RecyclerViewAdapter(myDataset);
+        mAdapter = new RecyclerViewAdapter(events);
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-
-    private String[] getDataSet() {
-
-        String[] mDataSet = new String[100];
-        for (int i = 0; i < 100; i++) {
-            mDataSet[i] = "item" + i;
-        }
-        return mDataSet;
     }
 
     public void onClick(View view) {
@@ -49,6 +47,9 @@ public class EventsListActivity extends AppCompatActivity {
         Intent detailedInfo = new Intent(this, DetailedInfoActivity.class);
         detailedInfo.putExtra("NAME", name.getText().toString());
         detailedInfo.putExtra("ADDRESS", address.getText().toString());
+
+        //mAdapter = new RecyclerViewAdapter(events);
+        //mRecyclerView.swapAdapter(mAdapter, false);
         startActivity(detailedInfo);
     }
 }
