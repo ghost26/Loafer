@@ -21,21 +21,27 @@ public class MainActivity extends AppCompatActivity{
         switch (v.getId()) {
             case R.id.stavropol :
                 tabsView.putExtra("CITY", "Ставрополь");
+                tabsView.putExtra("CITY_ID", "0");
                 break;
             case R.id.moscow :
                 tabsView.putExtra("CITY", "Москва");
+                tabsView.putExtra("CITY_ID", "1");
                 break;
             case R.id.stPetersburg :
                 tabsView.putExtra("CITY", "Санкт-Петербург");
+                tabsView.putExtra("CITY_ID", "2");
                 break;
             case R.id.rostov:
                 tabsView.putExtra("CITY", "Ростов");
+                tabsView.putExtra("CITY_ID", "3");
                 break;
             case R.id.rostovNaDony:
                 tabsView.putExtra("CITY", "Ростов-на-Дону");
+                tabsView.putExtra("CITY_ID", "4");
                 break;
             case R.id.krasnodar:
                 tabsView.putExtra("CITY", "Краснодар");
+                tabsView.putExtra("CITY_ID", "5");
                 break;
         }
         startActivity(tabsView);
