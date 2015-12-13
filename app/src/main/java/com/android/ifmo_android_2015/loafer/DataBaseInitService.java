@@ -2,7 +2,6 @@ package com.android.ifmo_android_2015.loafer;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.JsonReader;
 import android.util.Log;
 
@@ -47,6 +46,21 @@ public class DataBaseInitService extends IntentService {
         String city = intent.getStringExtra("CITY");
         String city_id = intent.getStringExtra("CITY_ID");
         List<Event> list = new ArrayList<>();
+//        try {
+//            EventDBHelper hp = EventDBHelper.getInstance(getApplicationContext());
+//            SQLiteDatabase db = hp.getWritableDatabase();
+//            DataBaseAdapter wdb = new DataBaseAdapter(db);
+//            if (wdb.isCityEventsExist(city_id)) {
+//                Log.d("DEBUGG", "город есть");
+//            } else {
+//                Log.d("DEBUGG", "города нет");
+//            }
+//            wdb.insertCity(Long.parseLong(city_id), city);
+//            Log.d("DEBUGG", "Все очень хорошо");
+//        } catch (Exception e) {
+//            Log.d("DEBUGG", "Все очень плохо");
+//        }
+
 
 
         int countedEvents = 0, add = 0;
@@ -76,14 +90,12 @@ public class DataBaseInitService extends IntentService {
 
         EventDBHelper hp = EventDBHelper.getInstance(getApplicationContext());
         try {
-//            hp.dropDb();
-            SQLiteDatabase db = hp.getWritableDatabase();
-            DataBaseAdapter wdb = new DataBaseAdapter(db);
-            wdb.insertCity(1, "Ставрополь");
+            DataBaseAdapter wdb = new DataBaseAdapter(hp.getWritableDatabase());
+            wdb.updateCityEvents(city_id, city, list);
 
-            wdb.insertEventList(list);
-            wdb.getAllEventsByCity("1");
-            wdb.deleteEventsByCity("1");
+            //wdb.insertEventList(list);
+            //wdb.getAllEventsByCity("1");
+            //wdb.deleteEventsByCity("1");
         } catch (Exception e) {
             Log.d("DataBaseInitService", "TOTAL FAIL! ((((");
 

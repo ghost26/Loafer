@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -23,6 +22,7 @@ public class DataBaseAdapter {
     private SQLiteDatabase db;
     private int importedCount;
     private SQLiteStatement statement;
+    private long cityId;
 
 
     public DataBaseAdapter(SQLiteDatabase db) {
@@ -30,7 +30,8 @@ public class DataBaseAdapter {
 
     }
 
-    public boolean insertEventList(List<Event> eventList) {
+    public boolean insertEventList(List<Event> eventList, long cityId) {
+        this.cityId = cityId;
         statement = db.compileStatement(String.format(
                 "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 EventContract.Events.TABLE,
@@ -68,7 +69,6 @@ public class DataBaseAdapter {
     }
 
     private boolean insertEvent(Event event) {
-
         statement.bindLong(1, event.getId());
         statement.bindString(2, event.getName());
         statement.bindString(3, event.getCreatedAt());
@@ -81,7 +81,7 @@ public class DataBaseAdapter {
         statement.bindString(10, event.getLocation().getCountry());
         statement.bindDouble(11, event.getLocation().getLatitude());
         statement.bindDouble(12, event.getLocation().getLongitude());
-        statement.bindLong(13, 1);
+        statement.bindLong(13, this.cityId);
         long rowId = statement.executeInsert();
 
 
@@ -93,6 +93,10 @@ public class DataBaseAdapter {
     }
 
     public boolean insertCity(long id, @NonNull String name) {
+        if (isCityEventsExist(Long.toString(id))) {
+            Log.w(LOG_TAG, "The city have already exist city_id: " + id + " " + name);
+            return false;
+        }
         final ContentValues values = new ContentValues();
         values.put(EventContract.Cities.CITY_ID, id);
         values.put(EventContract.Cities.NAME, name);
@@ -107,6 +111,11 @@ public class DataBaseAdapter {
 
     public boolean deleteEventsByCity(String cityId) {
         return db.delete(EventContract.Cities.TABLE, EventContract.Cities.CITY_ID + "=" + cityId, null) > 0;
+    }
+
+    public boolean isCityEventsExist(String cityId) {
+        Cursor cursor = db.query(EventContract.Cities.TABLE, new String[]{"_id", "name"}, "_id=?", new String[]{cityId}, null, null, null);
+        return cursor != null && cursor.moveToFirst();
     }
 
     public List<EasyEvent> getAllEventsByCity(String cityId) {
@@ -158,9 +167,12 @@ public class DataBaseAdapter {
             Log.d(LOG_TAG, "" + event.getName());
         }
 
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("Event", event);
-        //
         return event;
+    }
+
+    public boolean updateCityEvents(String cityId, String cityName, List<Event> eventList) {
+        deleteEventsByCity(cityId);
+        return insertCity(Long.parseLong(cityId), cityName) &&
+                insertEventList(eventList, Long.parseLong(cityId));
     }
 }
