@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     tools:context="com.android.ifmo_android_2015.loafer.SettingsActivity">
 
-    <TextView
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ЧЕ ТЫ ТУТ ДЕЛАЕШЬ???"/>
+        android:text="Обновить город"
+        android:onClick="onClick"/>
 
 </LinearLayout>

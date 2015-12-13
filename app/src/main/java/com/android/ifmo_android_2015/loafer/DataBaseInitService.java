@@ -43,11 +43,11 @@ public class DataBaseInitService extends IntentService {
         String from = intent.getStringExtra("FROM");
         pi = intent.getParcelableExtra("PINTENT");
 
-        if (from.equals("MAIN")) {
+        if (from.equals("MAIN") || from.equals("SETTINGS")) {
             EventDBHelper hp = EventDBHelper.getInstance(getApplicationContext());
             try {
                 DataBaseAdapter wdb = new DataBaseAdapter(hp.getReadableDatabase());
-                if (!wdb.isCityEventsExist(city_id)) {
+                if (!wdb.isCityEventsExist(city_id) || from.equals("SETTINGS")) {
                     Parser parser = new Parser();
                     ArrayList<Event> list = parser.parse(city);
                     wdb.updateCityEvents(city_id, city, list);
@@ -61,14 +61,17 @@ public class DataBaseInitService extends IntentService {
                 EventKeeper a = EventKeeper.getInstance(getApplicationContext());
                 a.setEasyEvents(easyEvents);
                 a.setMapEvents(mapEvents);
+                if (from.equals("SETTINGS")) {
+                    Intent in = new Intent("UPDATEISREADY");
+                    sendBroadcast(in);
+                }
                 pi.send(0);
-
+                status = Status.DONE;
             } catch (Exception e) {
                 e.printStackTrace();
                 status = Status.ERROR;
             }
         }
-        status = Status.DONE;
         stopSelf();
     }
 
