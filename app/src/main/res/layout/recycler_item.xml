@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/rec"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:onClick="onClick"
-    android:id="@+id/rec">
+    android:orientation="vertical">
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:id="@+id/recycler_item_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/recycler_item_image"
         android:src="@color/wallet_holo_blue_light"/>
     <TextView
+        android:id="@+id/recycler_item_name"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:textSize="23dp"
-        android:text="Name"
-        android:gravity="top"
-        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@id/recycler_item_image"
-        android:layout_toRightOf="@id/recycler_item_image"
-        android:id="@+id/recycler_item_name"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:textSize="15dp"
-        android:text="Address"
-        android:gravity="bottom"
         android:layout_marginLeft="10dp"
-        android:layout_alignBottom="@id/recycler_item_image"
         android:layout_toRightOf="@id/recycler_item_image"
-        android:id="@+id/recycler_item_address"/>
+        android:gravity="top"
+        android:text="Name"
+        android:textSize="23dp" />
+    <TextView
+        android:id="@+id/recycler_item_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/recycler_item_image"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/recycler_item_image"
+        android:gravity="bottom"
+        android:text="Address"
+        android:textSize="15dp" />
 
 </RelativeLayout>
