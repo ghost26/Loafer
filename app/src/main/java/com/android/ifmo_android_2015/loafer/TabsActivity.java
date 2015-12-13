@@ -6,10 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TabHost;
 
-import java.net.MalformedURLException;
-
-import timepad.Timepad;
-
 public class TabsActivity extends TabActivity {
 
     @Override
@@ -34,6 +30,7 @@ public class TabsActivity extends TabActivity {
 
         Intent db = new Intent(this, DataBaseInitService.class);
         db.putExtra("CITY", getIntent().getStringExtra("CITY"));
+        db.putExtra("CITY_ID", getIntent().getStringExtra("CITY_ID"));
         startService(db);
     }
 }

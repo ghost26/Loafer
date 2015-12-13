@@ -1,17 +1,21 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Created by ruslanabdulhalikov on 12.12.15.
  */
-public class EasyEvent {
+public class EasyEvent implements Serializable {
     private long id ;
     private String name = "";
     private String defaultImageUrl = "";
     private String address = "";
 
-    public void setId(long id) {this.id = id;}
-
     public long getId() {return id;}
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getDefaultImageUrl() {
         return defaultImageUrl;

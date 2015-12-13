@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -18,18 +19,16 @@ import model.Event;
  */
 public class DataBaseAdapter {
 
+    private static final String LOG_TAG = "EventReader";
     private SQLiteDatabase db;
     private int importedCount;
-
     private SQLiteStatement statement;
-
 
 
     public DataBaseAdapter(SQLiteDatabase db) {
         this.db = db;
 
     }
-
 
     public boolean insertEventList(List<Event> eventList) {
         statement = db.compileStatement(String.format(
@@ -68,8 +67,6 @@ public class DataBaseAdapter {
         return true;
     }
 
-
-
     private boolean insertEvent(Event event) {
 
         statement.bindLong(1, event.getId());
@@ -107,7 +104,6 @@ public class DataBaseAdapter {
         }
         return true;
     }
-
 
     public boolean deleteEventsByCity(String cityId) {
         return db.delete(EventContract.Cities.TABLE, EventContract.Cities.CITY_ID + "=" + cityId, null) > 0;
@@ -162,8 +158,9 @@ public class DataBaseAdapter {
             Log.d(LOG_TAG, "" + event.getName());
         }
 
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Event", event);
+        //
         return event;
     }
-
-    private static final String LOG_TAG = "EventReader";
 }

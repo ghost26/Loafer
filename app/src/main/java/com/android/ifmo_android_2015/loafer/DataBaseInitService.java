@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -46,6 +45,7 @@ public class DataBaseInitService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         status = Status.IN_PROGRESS;
         String city = intent.getStringExtra("CITY");
+        String city_id = intent.getStringExtra("CITY_ID");
         List<Event> list = new ArrayList<>();
 
 

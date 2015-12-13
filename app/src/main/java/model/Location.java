@@ -1,9 +1,11 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Created by ruslanabdulhalikov on 06.12.15.
  */
-public class Location {
+public class Location implements Serializable {
     private String country = "";
     private String city = "";
     private String address = "";

@@ -1,11 +1,11 @@
 package model;
 
-import java.net.URI;
+import java.io.Serializable;
 
 /**
  * Created by ruslanabdulhalikov on 05.12.15.
  */
-public class Event {
+public class Event implements Serializable {
     Location location;
     private long id ;
     private String createdAt = "";
@@ -96,8 +96,10 @@ public class Event {
         this.eventUrl = eventUrl;
     }
 
-    public void setId(long id) {this.id = id;}
-
     public long getId() {return id;}
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
 }
