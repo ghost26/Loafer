@@ -26,31 +26,29 @@ public class EventsListActivity extends AppCompatActivity {
     BroadcastReceiver receiver;
     EventKeeper eventKeeper;
 
+    public static String RECYCLER_VIEW_NAME = "NAME";
+    public static String RECYCLER_VIEW_ADDRESS = "ADDRESS";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_list);
 
+        IntentFilter filter = new IntentFilter(DataBaseInitService.UPDATE_IS_READY);
         receiver = new BroadcastReceiver()
         {
             @Override
             public void onReceive(Context context, Intent intent)
             {
-                if(intent.getAction().equals("UPDATEISREADY"))
-                {
-                    changeList();
-                }
+                changeList();
             }
         };
-        IntentFilter filter = new IntentFilter("UPDATEISREADY");
         registerReceiver(receiver, filter);
 
         eventKeeper = EventKeeper.getInstance(getApplicationContext());
         events = eventKeeper.getEasyEvents();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-
-        mRecyclerView.setHasFixedSize(true);//true if size of layout can't change
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -64,8 +62,8 @@ public class EventsListActivity extends AppCompatActivity {
         ImageView image = (ImageView) view.findViewById(R.id.recycler_item_image);
 
         Intent detailedInfo = new Intent(this, DetailedInfoActivity.class);
-        detailedInfo.putExtra("NAME", name.getText().toString());
-        detailedInfo.putExtra("ADDRESS", address.getText().toString());
+        detailedInfo.putExtra(RECYCLER_VIEW_NAME, name.getText().toString());
+        detailedInfo.putExtra(RECYCLER_VIEW_ADDRESS, address.getText().toString());
 
 
         startActivity(detailedInfo);
@@ -73,6 +71,7 @@ public class EventsListActivity extends AppCompatActivity {
 
     private void changeList() {
         Log.d("LIST", "UPDATE");
+
         events = eventKeeper.getEasyEvents();
         mAdapter = new RecyclerViewAdapter(events);
         mRecyclerView.swapAdapter(mAdapter, false);
