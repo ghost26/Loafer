@@ -1,11 +1,9 @@
 package model;
 
-import java.io.Serializable;
-
 /**
  * Created by ruslanabdulhalikov on 05.12.15.
  */
-public class Event implements Serializable {
+public class Event {
     Location location;
     private long id ;
     private String createdAt = "";

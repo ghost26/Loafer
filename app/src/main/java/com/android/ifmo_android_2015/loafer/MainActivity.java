@@ -20,17 +20,13 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity{
-    public String currentCity;
-    public String currentCityId;
-
-    private AlertDialog dialogForUpdate;
-
+    public static int MAIN_REQUEST = 0;
+    public static int LAST_ANSWER_FROM_SERVICE;
     private static boolean UPDATE_IN_PROGRESS;
     private static boolean IMAGE_LOADER_IS_EXIST;
-
-    public static int MAIN_REQUEST = 0;
-
-    public static int LAST_ANSWER_FROM_SERVICE;
+    public String currentCity;
+    public String currentCityId;
+    private AlertDialog dialogForUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +35,7 @@ public class MainActivity extends AppCompatActivity{
 
         if (UPDATE_IN_PROGRESS) {
             createDialogForUpdate();
-            updateDialogForUpdate(LAST_ANSWER_FROM_SERVICE);;
+            updateDialogForUpdate(LAST_ANSWER_FROM_SERVICE);
         }
 
         if (!IMAGE_LOADER_IS_EXIST) {
@@ -137,7 +133,8 @@ public class MainActivity extends AppCompatActivity{
     private void createImageLoader() {
         IMAGE_LOADER_IS_EXIST = true;
         ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(getApplicationContext());
-        config.threadPriority(Thread.NORM_PRIORITY - 1);
+        config.threadPoolSize(3);
+        config.threadPriority(Thread.NORM_PRIORITY - 2);
         config.denyCacheImageMultipleSizesInMemory();
         config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
         config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
