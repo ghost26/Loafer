@@ -1,11 +1,9 @@
 package model;
 
-import java.io.Serializable;
-
 /**
  * Created by daniil on 13.12.15.
  */
-public class MapEvent implements Serializable {
+public class MapEvent {
     private long id;
     private String name = "";
     private double latitude ;
@@ -28,13 +26,15 @@ public class MapEvent implements Serializable {
     public double getLatitude() {
         return latitude;
     }
-    public double getlongitude() {
-        return longitude;
-    }
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+    public double getlongitude() {
+        return longitude;
+    }
+
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }

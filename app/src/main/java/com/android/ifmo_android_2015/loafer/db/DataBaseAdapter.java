@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import model.MapEvent;
 public class DataBaseAdapter {
 
     private static final String LOG_TAG = "EventReader";
+    private final String PROTOCOL = "https://";
     private SQLiteDatabase db;
     private int importedCount;
     private SQLiteStatement statement;
@@ -70,14 +72,14 @@ public class DataBaseAdapter {
 
     private boolean insertEvent(Event event) {
         statement.bindLong(1, event.getId());
-        statement.bindString(2, event.getName());
+        statement.bindString(2, Html.fromHtml(event.getName()).toString());
         statement.bindString(3, event.getCreatedAt());
         statement.bindString(4, event.getStartAt());
         statement.bindString(5, event.getEndsAt());
-        statement.bindString(6, event.getDescriptionShort());
-        statement.bindString(7, event.getDefaultImageUrl());
+        statement.bindString(6, Html.fromHtml(event.getDescriptionShort()).toString());
+        statement.bindString(7, getNormalizedUrl(event.getDefaultImageUrl()));
         statement.bindString(8, event.getEventUrl());
-        statement.bindString(9, event.getLocation().getAddress());
+        statement.bindString(9, Html.fromHtml(event.getLocation().getAddress()).toString());
         statement.bindString(10, event.getLocation().getCountry());
         statement.bindDouble(11, event.getLocation().getLatitude());
         statement.bindDouble(12, event.getLocation().getLongitude());
@@ -198,5 +200,20 @@ public class DataBaseAdapter {
         deleteEventsByCity(cityId);
         return insertCity(Long.parseLong(cityId), cityName) &&
                 insertEventList(eventList, Long.parseLong(cityId));
+    }
+
+    private String getNormalizedUrl(String s) {
+        StringBuilder stringBuilder = new StringBuilder(s);
+        int pos = -1;
+        for (int i = 0; i < stringBuilder.length(); i++) {
+            if (stringBuilder.charAt(i) == '/') {
+                pos = i;
+            } else if (pos != -1) {
+                break;
+            }
+        }
+        stringBuilder.delete(0, pos + 1);
+        stringBuilder.insert(0, PROTOCOL);
+        return stringBuilder.toString();
     }
 }
