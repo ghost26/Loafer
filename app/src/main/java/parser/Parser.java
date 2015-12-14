@@ -1,6 +1,7 @@
 package parser;
 
 import android.util.JsonReader;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +27,7 @@ public class Parser {
 
     }
 
-    public ArrayList<Event> parse(String  city) {
+    public ArrayList<Event> parse(String  city) throws IOException, URISyntaxException {
         ArrayList<Event> list = new ArrayList<>();
         int countedEvents = 0, add = 0;
         try {
@@ -47,7 +48,8 @@ public class Parser {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d("LOL", "ERROR IN PARSER");
+            throw e;
         }
         return list;
     }

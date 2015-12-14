@@ -5,10 +5,22 @@
     android:layout_height="match_parent"
     tools:context="com.android.ifmo_android_2015.loafer.SettingsActivity">
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Обновить город"
-        android:onClick="onClick"/>
+        android:layout_height="wrap_content">
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Обновить город"
+            android:onClick="onClick"
+            android:id="@+id/updateButton"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/updateButton"
+            android:gravity="center_horizontal"
+            android:id="@+id/update_time"/>
+    </RelativeLayout>
 </LinearLayout>

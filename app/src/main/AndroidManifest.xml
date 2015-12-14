@@ -47,7 +47,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".TabsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
             android:name=".EventsListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
