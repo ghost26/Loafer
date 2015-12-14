@@ -39,6 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.name.setText(mDataset.get(position).getName());
         holder.address.setText(mDataset.get(position).getAddress());
+        holder.eventId.setText(String.valueOf(mDataset.get(position).getId()));
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(mDataset.get(position).getDefaultImageUrl(), holder.image);
     }
@@ -51,6 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name;
         public TextView address;
+        public TextView eventId;
         public ImageView image;
 
         public ViewHolder(View v) {
@@ -58,6 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             name = (TextView) v.findViewById(R.id.recycler_item_name);
             address = (TextView) v.findViewById(R.id.recycler_item_address);
             image = (ImageView) v.findViewById(R.id.recycler_item_image);
+            eventId = (TextView) v.findViewById(R.id.event_id);
         }
     }
 }

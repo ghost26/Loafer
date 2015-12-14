@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class EventKeeper {
     private ArrayList<EasyEvent> easyEvents;
     private ArrayList<MapEvent> mapEvents;
+    private Event event;
 
     private static volatile EventKeeper instance;
     private final Context context;
@@ -43,5 +44,13 @@ public class EventKeeper {
 
     public ArrayList<MapEvent> getMapEvents() {
         return mapEvents;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public Event getEvent() {
+        return this.event;
     }
 }

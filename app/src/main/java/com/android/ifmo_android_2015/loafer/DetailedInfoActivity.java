@@ -8,9 +8,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import model.Event;
+import model.EventKeeper;
+
 public class DetailedInfoActivity extends AppCompatActivity {
     private TextView name;
     private TextView address;
+    private TextView description;
+    private TextView startsAt;
+    private TextView endsAt;
     private ImageView image;
 
     @Override
@@ -18,13 +26,23 @@ public class DetailedInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_info);
 
-        Intent intent = getIntent();
-
         name = (TextView) findViewById(R.id.name);
         address = (TextView) findViewById(R.id.address);
+        description = (TextView) findViewById(R.id.description);
+        startsAt = (TextView) findViewById(R.id.starts_at);
+        endsAt = (TextView) findViewById(R.id.ends_at);
+        image = (ImageView) findViewById(R.id.image);
 
-        address.setText(intent.getStringExtra("ADDRESS"));
-        name.setText(intent.getStringExtra("NAME"));
+        EventKeeper eventKeeper = EventKeeper.getInstance(getApplicationContext());
+        Event event = eventKeeper.getEvent();
+
+        name.setText(event.getName());
+        address.setText(event.getLocation().getAddress());
+        description.setText(event.getDescriptionShort());
+        startsAt.setText(event.getStartAt());
+        endsAt.setText(event.getEndsAt());
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(event.getDefaultImageUrl(), image);
     }
 
     public void onClick(View view) {
