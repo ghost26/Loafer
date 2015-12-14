@@ -30,40 +30,49 @@
 
     </RelativeLayout>
 
-    <Button
-        style="@style/City"
-        android:id="@+id/stPetersburg"
-        android:text="Санкт-Петербург"
-        android:onClick="onClick"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        style="@style/City"
-        android:id="@+id/moscow"
-        android:text="Москва"
-        android:onClick="onClick"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <Button
+                style="@style/City"
+                android:id="@+id/stPetersburg"
+                android:text="Санкт-Петербург"
+                android:onClick="onClick"/>
 
-    <Button
-        style="@style/City"
-        android:id="@+id/rostovNaDony"
-        android:text="Ростов-На-Дону"
-        android:onClick="onClick"/>
+            <Button
+                style="@style/City"
+                android:id="@+id/moscow"
+                android:text="Москва"
+                android:onClick="onClick"/>
 
-    <Button
-        style="@style/City"
-        android:id="@+id/saratov"
-        android:text="Саратов"
-        android:onClick="onClick"/>
+            <Button
+                style="@style/City"
+                android:id="@+id/rostovNaDony"
+                android:text="Ростов-На-Дону"
+                android:onClick="onClick"/>
 
-    <Button
-        style="@style/City"
-        android:id="@+id/krasnodar"
-        android:text="Краснодар"
-        android:onClick="onClick"/>
+            <Button
+                style="@style/City"
+                android:id="@+id/saratov"
+                android:text="Саратов"
+                android:onClick="onClick"/>
 
-    <Button
-        style="@style/City"
-        android:id="@+id/stavropol"
-        android:text="Ставрополь"
-        android:onClick="onClick"/>
+            <Button
+                style="@style/City"
+                android:id="@+id/krasnodar"
+                android:text="Краснодар"
+                android:onClick="onClick"/>
 
+            <Button
+                style="@style/City"
+                android:id="@+id/stavropol"
+                android:text="Ставрополь"
+                android:onClick="onClick"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
