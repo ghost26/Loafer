@@ -19,9 +19,10 @@ public class TabsActivity extends TabActivity {
         Intent settingsIntent = new Intent(this, SettingsActivity.class);
 
         settingsIntent.putExtras(intent.getExtras());
-
-        TabHost.TabSpec tabList= tabHost.newTabSpec("List").setIndicator("Список").setContent(listIntent);
-        TabHost.TabSpec tabSettings = tabHost.newTabSpec("Settings").setIndicator("Настройки").setContent(settingsIntent);
+        TabHost.TabSpec tabList= tabHost.newTabSpec(getString(R.string.list_name))
+                .setIndicator(getString(R.string.res_list)).setContent(listIntent);
+        TabHost.TabSpec tabSettings = tabHost.newTabSpec(getString(R.string.settings))
+                .setIndicator(getString(R.string.settings_name)).setContent(settingsIntent);
 
         tabHost.addTab(tabList);
         tabHost.addTab(tabSettings);

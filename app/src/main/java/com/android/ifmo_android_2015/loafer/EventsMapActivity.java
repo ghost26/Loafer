@@ -16,6 +16,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     private MapView mapView;
     private double latitude;
     private double longitude;
+    private float zoom;
 
     private MarkerOptions marker;
 
@@ -24,12 +25,19 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_map);
 
-        marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Hello Maps ");
+//        marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Hello Maps ");
 
-        Intent intent = getIntent();
-        latitude = intent.getDoubleExtra(DetailedInfoActivity.LAT, 0);
-        longitude = intent.getDoubleExtra(DetailedInfoActivity.LNG, 0);
+        if (savedInstanceState == null) {
 
+            Intent intent = getIntent();
+            latitude = intent.getDoubleExtra(DetailedInfoActivity.LAT, 0);
+            longitude = intent.getDoubleExtra(DetailedInfoActivity.LNG, 0);
+            zoom = 14f;
+        } else {
+            latitude = savedInstanceState.getDouble("lat");
+            longitude = savedInstanceState.getDouble("lng");
+            zoom = savedInstanceState.getFloat("zoom");
+        }
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         mapView.getMap().getUiSettings().setZoomControlsEnabled(true);
@@ -66,6 +74,9 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
+        outState.putDouble("lat", latitude);
+        outState.putDouble("lng", longitude);
+        outState.putFloat("zoom", zoom);
     }
 
 
@@ -73,7 +84,7 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         googleMap.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(
-                        new LatLng(latitude, longitude), 14f));
+                        new LatLng(latitude, longitude), zoom));
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
                 .title("Hello world"));
