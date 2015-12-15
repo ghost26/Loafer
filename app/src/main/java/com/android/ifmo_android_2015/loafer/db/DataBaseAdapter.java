@@ -9,10 +9,10 @@ import android.text.Html;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import model.EasyEvent;
 import model.Event;
-import model.MapEvent;
 
 /**
  * Created by ruslanabdulhalikov on 12.12.15.
@@ -102,6 +102,8 @@ public class DataBaseAdapter {
         final ContentValues values = new ContentValues();
         values.put(EventContract.Cities.CITY_ID, id);
         values.put(EventContract.Cities.NAME, name);
+        Calendar calendar = Calendar.getInstance();
+        values.put(EventContract.Cities.LASTUPDATE, calendar.getTime().toString());
 
         long rowId = db.insert(EventContract.Cities.TABLE, null /*nullColumnHack not needed*/, values);
         if (rowId < 0) {
@@ -116,8 +118,16 @@ public class DataBaseAdapter {
     }
 
     public boolean isCityEventsExist(String cityId) {
-        Cursor cursor = db.query(EventContract.Cities.TABLE, new String[]{"_id", "name"}, "_id=?", new String[]{cityId}, null, null, null);
+        Cursor cursor = db.query(EventContract.Cities.TABLE, new String[]{"_id", "name", "last_upd"}, "_id=?", new String[]{cityId}, null, null, null);
         return cursor != null && cursor.moveToFirst();
+    }
+
+    public String getLastUpdate(String cityId) {
+        Cursor cursor = db.query(EventContract.Cities.TABLE, new String[]{"_id", "name", "last_upd"}, "_id=?", new String[]{cityId}, null, null, null);
+        if (cursor != null && cursor.moveToFirst() && !cursor.isAfterLast()) {
+            return cursor.getString(2);
+        }
+        return "";
     }
 
     public ArrayList<EasyEvent> getAllEventsByCity(String cityId) {
@@ -137,30 +147,6 @@ public class DataBaseAdapter {
                 easyEvent.setAddress(cursor.getString(3));
                 //Log.d(LOG_TAG, "" + easyEvent.getName());
                 list.add(easyEvent);
-            }
-
-        }
-
-        return list;
-    }
-
-    public ArrayList<MapEvent> getAllMapEventsByCity(String cityId) {
-
-        Cursor cursor = db.query(EventContract.Events.TABLE,
-                new String[] { "_id", "name", "latitude", "longitude"},
-                "city_id=?",
-                new String[] {cityId}, null, null, null);
-        ArrayList<MapEvent> list = new ArrayList<>();
-
-        if (cursor != null && cursor.moveToFirst()) {
-            for(; !cursor.isAfterLast(); cursor.moveToNext()) {
-                MapEvent mapEvent = new MapEvent();
-                mapEvent.setId(cursor.getLong(0));
-                mapEvent.setName(cursor.getString(1));
-                mapEvent.setLatitude(cursor.getDouble(2));
-                mapEvent.setLongitude(cursor.getDouble(3));
-                //Log.d(LOG_TAG, "" + mapEvent.getName());
-                list.add(mapEvent);
             }
 
         }
@@ -192,7 +178,6 @@ public class DataBaseAdapter {
             event.setDefaultImageUrl(cursor.getString(9));
             event.setEventUrl(cursor.getString(10));
             event.getLocation().setAddress(cursor.getString(11));
-            //Log.d(LOG_TAG, "" + event.getName());
             Log.d("DBSER", "FIND EVENT");
         }
         Log.d("DBSER", "SEND EVENT");

@@ -1,9 +1,6 @@
 package com.android.ifmo_android_2015.loafer;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -12,37 +9,26 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.ArrayList;
-
-import model.EventKeeper;
-import model.MapEvent;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     private MapView mapView;
-    private BroadcastReceiver receiver;
-    private EventKeeper eventKeeper;
-    private ArrayList<MapEvent> events;
+    private double latitude;
+    private double longitude;
+
+    private MarkerOptions marker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_map);
 
-        IntentFilter filter = new IntentFilter(DataBaseInitService.UPDATE_IS_READY);
-        receiver = new BroadcastReceiver()
-        {
-            @Override
-            public void onReceive(Context context, Intent intent)
-            {
-                //call function to change map view
-            }
-        };
-        registerReceiver(receiver, filter);
+        marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("Hello Maps ");
 
-        eventKeeper = EventKeeper.getInstance(getApplicationContext());
-        events = eventKeeper.getMapEvents();
+        Intent intent = getIntent();
+        latitude = intent.getDoubleExtra(DetailedInfoActivity.LAT, 0);
+        longitude = intent.getDoubleExtra(DetailedInfoActivity.LNG, 0);
 
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
@@ -87,6 +73,10 @@ public class EventsMapActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         googleMap.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(
-                        new LatLng(0, 0), 14f));
+                        new LatLng(latitude, longitude), 14f));
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(latitude, longitude))
+                .title("Hello world"));
+
     }
 }

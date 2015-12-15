@@ -1,142 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#f2d9f9">
 
-    <ScrollView
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:layout_above="@+id/seeMore"
-        android:layout_marginTop="5dp">
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            android:paddingLeft="5dp">
+            android:layout_height="match_parent">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:layout_above="@+id/viewInMap"
+                android:layout_marginTop="5dp">
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="#FFFFFF"
-                android:id="@+id/image"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/image"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp"
-                android:id="@+id/name_rl">
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="#FFFFFF"
+                        android:id="@+id/image"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true" />
 
-                <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:text="Название:"
-                    android:textColor="#000000"
-                    android:id="@+id/name_title"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/name"/>
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/image"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/name_rl">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/name_rl"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp"
-                android:id="@+id/description_rl">
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="Название:"
+                            android:textColor="#000000"
+                            android:id="@+id/name_title"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/name"/>
+                    </LinearLayout>
 
-                <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:text="Описание:"
-                    android:textColor="#000000"
-                    android:id="@+id/description_title"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/description"/>
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name_rl"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/description_rl">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/description_rl"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp"
-                android:id="@+id/address_rl">
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="Описание:"
+                            android:textColor="#000000"
+                            android:id="@+id/description_title"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/description"/>
+                    </LinearLayout>
 
-                <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:text="Адрес:"
-                    android:textColor="#000000"
-                    android:id="@+id/address_title"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/address"/>
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/description_rl"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/address_rl">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/address_rl"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp"
-                android:id="@+id/starts_at_rl">
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="Адрес:"
+                            android:textColor="#000000"
+                            android:id="@+id/address_title"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/address"/>
+                    </LinearLayout>
 
-                <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:text="Начало:"
-                    android:textColor="#000000"
-                    android:id="@+id/starts_at_title"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/starts_at"/>
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/address_rl"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/starts_at_rl">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/starts_at_rl"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp"
-                android:id="@+id/ends_at_rl">
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="Начало:"
+                            android:textColor="#000000"
+                            android:id="@+id/starts_at_title"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/starts_at"/>
+                    </LinearLayout>
 
-                <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:text="Конец:"
-                    android:textColor="#000000"
-                    android:id="@+id/ends_at_title"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ends_at"/>
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/starts_at_rl"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/ends_at_rl">
 
+                        <TextView
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:text="Конец:"
+                            android:textColor="#000000"
+                            android:id="@+id/ends_at_title"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/ends_at"/>
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </ScrollView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Открыть страницу в Timepad"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:layout_alignParentBottom="true"
+                android:onClick="onClick"
+                android:id="@+id/seeMore" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Показать на карте"
+                android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:layout_above="@id/seeMore"
+                android:onClick="onClick"
+                android:id="@+id/viewInMap" />
         </RelativeLayout>
-    </ScrollView>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="SEE MORE"
-        android:textAlignment="center"
-        android:gravity="center_vertical"
-        android:layout_alignParentBottom="true"
-        android:onClick="onClick"
-        android:id="@+id/seeMore" />
-
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

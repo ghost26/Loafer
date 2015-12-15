@@ -15,17 +15,14 @@ public class TabsActivity extends TabActivity {
         Intent intent = getIntent();
 
         TabHost tabHost = getTabHost();
-        Intent mapIntent = new Intent(this, EventsMapActivity.class);
         Intent listIntent = new Intent(this, EventsListActivity.class);
         Intent settingsIntent = new Intent(this, SettingsActivity.class);
 
         settingsIntent.putExtras(intent.getExtras());
 
-        TabHost.TabSpec tabMap = tabHost.newTabSpec("Map").setIndicator("Карта").setContent(mapIntent);
         TabHost.TabSpec tabList= tabHost.newTabSpec("List").setIndicator("Список").setContent(listIntent);
         TabHost.TabSpec tabSettings = tabHost.newTabSpec("Settings").setIndicator("Настройки").setContent(settingsIntent);
 
-        tabHost.addTab(tabMap);
         tabHost.addTab(tabList);
         tabHost.addTab(tabSettings);
     }

@@ -9,12 +9,10 @@ import com.android.ifmo_android_2015.loafer.db.DataBaseAdapter;
 import com.android.ifmo_android_2015.loafer.db.EventDBHelper;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import model.EasyEvent;
 import model.Event;
 import model.EventKeeper;
-import model.MapEvent;
 import parser.Parser;
 
 /**
@@ -71,13 +69,9 @@ public class DataBaseInitService extends IntentService {
                     wdb.updateCityEvents(city_id, city, list);
                 }
 
-                pi.send(GET_FROM_DB);
                 ArrayList<EasyEvent> easyEvents = wdb.getAllEventsByCity(city_id);
-                ArrayList<MapEvent> mapEvents = wdb.getAllMapEventsByCity(city_id);
-
                 EventKeeper a = EventKeeper.getInstance(getApplicationContext());
                 a.setEasyEvents(easyEvents);
-                a.setMapEvents(mapEvents);
 
                 if (from.equals(FROM_SETTINGS)) {
                     Intent in = new Intent(UPDATE_IS_READY);
@@ -85,10 +79,8 @@ public class DataBaseInitService extends IntentService {
                 }
 
                 Intent data = new Intent();
-                if (from.equals(FROM_SETTINGS)) {
-                    Calendar calendar = Calendar.getInstance();
-                    String time = calendar.getTime().toString();
-                    data.putExtra(CURRENT_DATA, time);
+                if (from.equals(FROM_SETTINGS) || from.equals(FROM_MAIN)) {
+                    data.putExtra(CURRENT_DATA, wdb.getLastUpdate(city_id));
                 }
 
                 pi.send(this, DONE, data);
