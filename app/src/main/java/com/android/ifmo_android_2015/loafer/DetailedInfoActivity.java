@@ -21,6 +21,13 @@ public class DetailedInfoActivity extends AppCompatActivity {
     private TextView endsAt;
     private ImageView image;
 
+    public static String LAT = "LAT";
+    public static String LNG = "LNG";
+    private String url;
+
+    private double longitude;
+    private double latitude;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,17 +43,29 @@ public class DetailedInfoActivity extends AppCompatActivity {
         EventKeeper eventKeeper = EventKeeper.getInstance(getApplicationContext());
         Event event = eventKeeper.getEvent();
 
+        url = event.getEventUrl();
+        longitude = event.getLocation().getLongitude();
+        latitude = event.getLocation().getLatitude();
         name.setText(event.getName());
         address.setText(event.getLocation().getAddress());
         description.setText(event.getDescriptionShort());
         startsAt.setText(event.getStartAt());
         endsAt.setText(event.getEndsAt());
+
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(event.getDefaultImageUrl(), image);
     }
 
     public void onClick(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
-        startActivity(browserIntent);
+        if (view.getId() == R.id.seeMore) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(browserIntent);
+        }
+        if (view.getId() == R.id.viewInMap) {
+            Intent intent = new Intent(this, EventsMapActivity.class);
+            intent.putExtra(LAT, latitude);
+            intent.putExtra(LNG, longitude);
+            startActivity(intent);
+        }
     }
 }

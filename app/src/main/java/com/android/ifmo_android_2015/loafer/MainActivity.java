@@ -17,8 +17,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
-import java.util.Calendar;
-
 public class MainActivity extends AppCompatActivity{
     public static int MAIN_REQUEST = 0;
     public static int LAST_ANSWER_FROM_SERVICE;
@@ -91,9 +89,7 @@ public class MainActivity extends AppCompatActivity{
                 Intent intent = new Intent(this, TabsActivity.class);
                 intent.putExtra(DataBaseInitService.CITY, currentCity);
                 intent.putExtra(DataBaseInitService.CITY_ID, currentCityId);
-                Calendar calendar = Calendar.getInstance();
-                String curData = calendar.getTime().toString();
-                intent.putExtra(DataBaseInitService.CURRENT_DATA,curData);
+                intent.putExtra(DataBaseInitService.CURRENT_DATA,data.getStringExtra(DataBaseInitService.CURRENT_DATA));
                 startActivity(intent);
             } else if (resultCode == DataBaseInitService.ERROR) {
                 Toast.makeText(getApplicationContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();

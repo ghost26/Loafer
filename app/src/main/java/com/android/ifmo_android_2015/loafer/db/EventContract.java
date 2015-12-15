@@ -1,7 +1,5 @@
 package com.android.ifmo_android_2015.loafer.db;
 
-import java.net.URI;
-
 /**
  * Created by ruslanabdulhalikov on 10.12.15.
  */
@@ -40,6 +38,8 @@ public final class EventContract {
 
         String NAME = "name";
 
+        String LASTUPDATE = "last_upd";
+
     }
 
     public static final class Events implements EventColumns {
@@ -73,7 +73,8 @@ public final class EventContract {
         static final String CREATE_TABLE = "CREATE TABLE " + TABLE
                 + " ("
                 + CITY_ID + " INTEGER PRIMARY KEY, "
-                + NAME + " TEXT"
+                + NAME + " TEXT,"
+                + LASTUPDATE + " TEXT"
                 + ");";
 
     }
