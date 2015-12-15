@@ -53,8 +53,10 @@ public class DataBaseAdapter {
         db.beginTransaction();
         try {
             for(int i = 0; i < eventList.size(); ++i) {
-                if (!insertEvent(eventList.get(i))) {
-                    return false;
+                if (!isEventExists(eventList.get(i).getId())) {
+                    if (!insertEvent(eventList.get(i))) {
+                        return false;
+                    }
                 }
             }
             db.setTransactionSuccessful();
@@ -116,6 +118,13 @@ public class DataBaseAdapter {
     public boolean deleteEventsByCity(String cityId) {
         return db.delete(EventContract.Cities.TABLE, EventContract.Cities.CITY_ID + "=" + cityId, null) > 0;
     }
+
+    private boolean isEventExists(long eventId) {
+        String evid = Long.toString(eventId);
+        Cursor cursor = db.query(EventContract.Events.TABLE, new String[]{"_id", "name"}, "_id=?", new String[]{evid}, null, null, null);
+        return cursor != null && cursor.moveToFirst();
+    }
+
 
     public boolean isCityEventsExist(String cityId) {
         Cursor cursor = db.query(EventContract.Cities.TABLE, new String[]{"_id", "name", "last_upd"}, "_id=?", new String[]{cityId}, null, null, null);
