@@ -28,11 +28,13 @@ public class DataBaseInitService extends IntentService {
     public static String FROM = "FROM";
     public static String FROM_MAIN = "FROM_MAIN";
     public static String FROM_SETTINGS = "FROM_SETTINGS";
+    public static String FROM_LIST = "FROM_LIST";
     public static String CITY_ID = "CITY_ID";
     public static String CITY = "CITY";
     public static String PENDING_INTENT = "PENDING_INTENT";
     public static String UPDATE_IS_READY = "UPDATE_IS_READY";
     public static String CURRENT_DATA = "UPDATE_IS_READY";
+    public static String EVENT_ID = "EVENT_ID";
 
     public static int DONE = 0;
     public static int ERROR = 1;
@@ -51,16 +53,17 @@ public class DataBaseInitService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String city = intent.getStringExtra(DataBaseInitService.CITY);
-        String city_id = intent.getStringExtra(DataBaseInitService.CITY_ID);
-        String from = intent.getStringExtra(DataBaseInitService.FROM);
-        pi = intent.getParcelableExtra(DataBaseInitService.PENDING_INTENT);
+        String city = intent.getStringExtra(CITY);
+        String city_id = intent.getStringExtra(CITY_ID);
+        String from = intent.getStringExtra(FROM);
+        String eventId = intent.getStringExtra(EVENT_ID);
+        pi = intent.getParcelableExtra(PENDING_INTENT);
 
-        if (from.equals(DataBaseInitService.FROM_MAIN) || from.equals(DataBaseInitService.FROM_SETTINGS)) {
-            EventDBHelper hp = EventDBHelper.getInstance(getApplicationContext());
+        EventDBHelper hp = EventDBHelper.getInstance(getApplicationContext());
+        DataBaseAdapter wdb = new DataBaseAdapter(hp.getReadableDatabase());
+        if (from.equals(FROM_MAIN) || from.equals(FROM_SETTINGS)) {
             try {
-                DataBaseAdapter wdb = new DataBaseAdapter(hp.getReadableDatabase());
-                if (!wdb.isCityEventsExist(city_id) || from.equals(DataBaseInitService.FROM_SETTINGS)) {
+                if (!wdb.isCityEventsExist(city_id) || from.equals(FROM_SETTINGS)) {
                     Parser parser = new Parser();
                     pi.send(TRY_TO_TAKE_TIMEPAD_DATA);
                     ArrayList<Event> list = parser.parse(city);
@@ -76,7 +79,7 @@ public class DataBaseInitService extends IntentService {
                 a.setEasyEvents(easyEvents);
                 a.setMapEvents(mapEvents);
 
-                if (from.equals(DataBaseInitService.FROM_SETTINGS)) {
+                if (from.equals(FROM_SETTINGS)) {
                     Intent in = new Intent(UPDATE_IS_READY);
                     sendBroadcast(in);
                 }
@@ -90,6 +93,28 @@ public class DataBaseInitService extends IntentService {
 
                 pi.send(this, DONE, data);
             } catch (Exception e) {
+                try {
+                    pi.send(ERROR);
+                } catch (PendingIntent.CanceledException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+
+        if (from.equals(FROM_LIST)) {
+            try {
+                Log.d("DBSER", "TRY TO GET EVENT" + eventId);
+                Event event = wdb.getEventById(eventId);
+                Log.d("DBSER", "GET EVENT");
+
+                pi.send(GET_FROM_DB);
+
+                EventKeeper a = EventKeeper.getInstance(getApplicationContext());
+                a.setEvent(event);
+
+                pi.send(DONE);
+            } catch (Exception e) {
+                e.printStackTrace();
                 try {
                     pi.send(ERROR);
                 } catch (PendingIntent.CanceledException e1) {

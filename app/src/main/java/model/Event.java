@@ -4,7 +4,7 @@ package model;
  * Created by ruslanabdulhalikov on 05.12.15.
  */
 public class Event {
-    Location location;
+    Location location = new Location();
     private long id ;
     private String createdAt = "";
     private String startAt = "";

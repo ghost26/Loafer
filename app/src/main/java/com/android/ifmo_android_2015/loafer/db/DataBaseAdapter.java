@@ -178,7 +178,9 @@ public class DataBaseAdapter {
                 new String[] {eventId}, null, null, null);
 
         Event event = new Event();
+        Log.d("DBSER", "CREATE NEW EVENT");
         if (cursor != null && cursor.moveToFirst() && !cursor.isAfterLast()) {
+            Log.d("DBSER", "IN IF");
             event.setId(cursor.getLong(0));
             event.setName(cursor.getString(1));
             event.getLocation().setCountry(cursor.getString(2));
@@ -191,8 +193,9 @@ public class DataBaseAdapter {
             event.setEventUrl(cursor.getString(10));
             event.getLocation().setAddress(cursor.getString(11));
             //Log.d(LOG_TAG, "" + event.getName());
+            Log.d("DBSER", "FIND EVENT");
         }
-
+        Log.d("DBSER", "SEND EVENT");
         return event;
     }
 

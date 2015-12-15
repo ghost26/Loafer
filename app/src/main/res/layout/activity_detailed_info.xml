@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp"
-    android:paddingRight="15dp"
-    android:paddingLeft="15dp">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_above="@+id/seeMore"
+        android:layout_marginTop="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingRight="15dp"
-            android:paddingLeft="15dp">
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp">
 
             <ImageView
                 android:layout_width="100dp"
@@ -44,7 +43,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:id="@+id/name"/>
             </LinearLayout>
 
@@ -59,13 +57,12 @@
                 <TextView
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:text="Название:"
+                    android:text="Описание:"
                     android:textColor="#000000"
                     android:id="@+id/description_title"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:id="@+id/description"/>
             </LinearLayout>
 
@@ -80,13 +77,12 @@
                 <TextView
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:text="Описание:"
+                    android:text="Адрес:"
                     android:textColor="#000000"
                     android:id="@+id/address_title"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:id="@+id/address"/>
             </LinearLayout>
 
@@ -107,7 +103,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:id="@+id/starts_at"/>
             </LinearLayout>
 
@@ -128,7 +123,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:id="@+id/ends_at"/>
             </LinearLayout>
 
